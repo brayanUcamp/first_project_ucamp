@@ -38,16 +38,17 @@ class _ProductItemCardState extends State<ProductItemCard> {
       child: Stack(
         children: [
           Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.transparent,
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: NetworkImage(widget.imageUrl),
-                    ),
+              Container(
+                height: 200,
+                width: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.transparent,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(widget.imageUrl),
                   ),
                 ),
               ),
@@ -57,37 +58,34 @@ class _ProductItemCardState extends State<ProductItemCard> {
                     color: Colors.white),
                 child: Column(
                   children: [
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 0),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            widget.description.toString(),
-                            style: const TextStyle(
+                        Column(
+                          children: [
+                            Text(
+                              widget.description.toString(),
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 17),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 20),
-                          child: Icon(Icons.favorite_border),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: const [
-                        Padding(
-                          padding: EdgeInsets.only(left: 7),
-                          child: Text(
-                            '\$2000',
-                            style: TextStyle(
+                                fontSize: 17,
+                              ),
+                            ),
+                            const Text(
+                              '\$2000',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
                                 color: Colors.red,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ),
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
                         ),
+                        const Expanded(child: Icon(Icons.favorite_border))
                       ],
                     ),
                   ],

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:m1_s4_ucamp/card_scroll_view.dart';
+import 'package:m1_s4_ucamp/card_scroll_man_view.dart';
+import 'package:m1_s4_ucamp/counter.dart';
+import 'package:m1_s4_ucamp/home_woman.dart';
 import 'dart:math';
 
 import 'package:m1_s4_ucamp/product_item_card.dart';
+
+import 'home_Man.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,28 +49,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
+  int _currentIndex = 0;
 
-  void _incrementCounter() {
-    setState(() => (_counter = _counter + 5));
-  }
-
-  void _decrementCounter() {
+  void _changeNavigatorBar(int index) {
     setState(() {
-      if (_counter > 0) {
-        _counter = _counter - 5;
-      }
+      _currentIndex = index;
     });
   }
 
-  void _removeCounter() {
-    setState(() => _counter = 0);
-  }
+  final List<Widget> buttonNavigatorBar = [const HomeMan(), const HomeWoman()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 190, 150, 4),
         title: const Text(
           "Tienda de Ropa",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -93,41 +90,28 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: CardScrollView(
-        counter: _counter,
-      ),
-      floatingActionButton: Container(
-        padding: const EdgeInsets.only(left: 30),
-        child: Row(
-          children: [
-            FloatingActionButton(
-              backgroundColor: Color.fromARGB(255, 80, 75, 75),
-              onPressed: () => _decrementCounter(),
-              child: const Icon(Icons.remove),
+      body: buttonNavigatorBar[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _changeNavigatorBar,
+        items: const [
+          BottomNavigationBarItem(
+            label: "Man",
+            icon: Icon(
+              Icons.man,
+              color: Colors.black,
+              size: 30,
             ),
-            const SizedBox(
-              width: 10,
+          ),
+          BottomNavigationBarItem(
+            label: "Woman",
+            icon: Icon(
+              Icons.woman_outlined,
+              color: Colors.black,
+              size: 30,
             ),
-            GestureDetector(
-              onTap: () => _removeCounter(),
-              child: Text(
-                " Sin Descuentos".toUpperCase(),
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            FloatingActionButton(
-              backgroundColor: Color.fromARGB(255, 180, 13, 1),
-              onPressed: () => _incrementCounter(),
-              child: const Icon(
-                Icons.add,
-                size: 30,
-              ),
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
